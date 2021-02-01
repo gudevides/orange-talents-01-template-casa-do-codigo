@@ -8,8 +8,6 @@ import org.springframework.validation.Validator;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
-import java.util.List;
 
 @Component
 public class EstadoPaisValidator implements Validator {
@@ -22,6 +20,12 @@ public class EstadoPaisValidator implements Validator {
         return PagamentoRequest.class.isAssignableFrom(clazz);
     }
 
+    /**
+     * Método que valida se o estado informado pertence ao país informado; e caso o estado não tenha sido informado,
+     * verifica se o páis informado possuí Estados cadastrados, pois se tiver, o estado deve ser obrigatório.
+     * @param target
+     * @param errors
+     */
     @Override
     public void validate(Object target, Errors errors) {
         if (errors.hasErrors()){
