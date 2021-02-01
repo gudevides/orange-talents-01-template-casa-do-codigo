@@ -37,13 +37,8 @@ public class EstadoPaisValidator implements Validator {
             if (!estado.pertencePais(pais)){
                 errors.rejectValue("idEstado", null, "Este estado não é do país selecionado!");
             }
-        } else {
-            Query query = entityManager.createQuery("select 1 from Estado e where e.pais.id=:value");
-            query.setParameter("value", request.getIdPais());
-            List<?> list = query.getResultList();
-            if (!list.isEmpty()){
+        } else if (pais.temEstados(entityManager)){
                 errors.rejectValue("idEstado", null, "O país selecionado possui estado(s) cadastrado(s), é necessário informá-lo!");
-            }
         }
     }
 }
